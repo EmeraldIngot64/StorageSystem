@@ -45,7 +45,6 @@ public class StorageItemPlaceListener implements Listener {
 
 
         // For legacy purposes to ensure that items cannot be placed before being migrated
-
         List<String> lore = itemStack.getItemMeta().getLore();
 
         if (lore.contains(Language.STORAGE_SYSTEM_LORE_TAG)) {
