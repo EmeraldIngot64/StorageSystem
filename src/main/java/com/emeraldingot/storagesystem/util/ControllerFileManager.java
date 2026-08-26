@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 
 
@@ -21,6 +22,7 @@ public class ControllerFileManager {
     public static FileConfiguration controllersData;
 
     private File controllersFile;
+    private File langFolder;
 
     private static ControllerFileManager instance;
 
@@ -50,7 +52,10 @@ public class ControllerFileManager {
         }
         controllersData = YamlConfiguration.loadConfiguration(controllersFile);
 
-//        updateData();
+        langFolder = new File(plugin.getDataFolder(), "lang");
+        if (!langFolder.exists()) {
+            langFolder.mkdir();
+        }
 
     }
 
@@ -101,6 +106,10 @@ public class ControllerFileManager {
 
     public long getBalance(UUID playerUUID) {
         return (long) controllersData.get(String.valueOf(playerUUID));
+    }
+
+    public Path getLangFolder() {
+        return langFolder.toPath();
     }
 
 //    public boolean isNewPlayer(Player player) {

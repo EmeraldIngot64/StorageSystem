@@ -5,6 +5,7 @@ import com.emeraldingot.storagesystem.gui.StorageSystemHolder;
 import com.emeraldingot.storagesystem.gui.terminal.StorageSystemGui;
 import com.emeraldingot.storagesystem.gui.util.GuiUtil;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
+import com.emeraldingot.storagesystem.impl.SearchData;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
 import com.emeraldingot.storagesystem.langauge.Language;
 import com.emeraldingot.storagesystem.util.SkullUtil;
@@ -69,12 +70,11 @@ public class TerminalItemsPage extends AbstractTerminalPage {
         GuiButton searchButton = new GuiButton(
                 searchSign,
                 event -> {
-                    GuiUtil.openSearchDialog(player, searchTerm -> {
-                        if (searchTerm.isBlank()) {
+                    GuiUtil.openSearchDialog(player, searchData -> {
+                        if (searchData.query().isBlank()) {
                             return;
                         }
-                        searchTerm = searchTerm.strip();
-                        player.openInventory(new TerminalSearchPage(player, storageCellData, 0, searchTerm).build());
+                        player.openInventory(new TerminalSearchPage(player, storageCellData, 0, searchData).build());
                     });
                 }
         );
@@ -161,7 +161,7 @@ public class TerminalItemsPage extends AbstractTerminalPage {
 
     }
 
-    public static void createPageNavButton(Inventory inventory, Player player, StorageCellData storageCellData, int pageNumber, String url, String name, String searchTerm, int slot) {
+    public static void createPageNavButton(Inventory inventory, Player player, StorageCellData storageCellData, int pageNumber, String url, String name, SearchData searchData, int slot) {
         ItemStack navigationItem;
         try {
             navigationItem = SkullUtil.createPlayerHead(url);
@@ -175,7 +175,7 @@ public class TerminalItemsPage extends AbstractTerminalPage {
         navigationItem.setItemMeta(itemMeta);
         GuiButton navigationButton;
 
-        if (searchTerm == null) {
+        if (searchData == null) {
             navigationButton = new GuiButton(
                     navigationItem,
                     event -> {
@@ -188,7 +188,7 @@ public class TerminalItemsPage extends AbstractTerminalPage {
             navigationButton = new GuiButton(
                     navigationItem,
                     event -> {
-                        TerminalSearchPage terminalSearchPage = new TerminalSearchPage(player, storageCellData, pageNumber, searchTerm);
+                        TerminalSearchPage terminalSearchPage = new TerminalSearchPage(player, storageCellData, pageNumber, searchData);
                         player.openInventory(terminalSearchPage.build());
                     }
             );
@@ -199,7 +199,7 @@ public class TerminalItemsPage extends AbstractTerminalPage {
         inventory.setItem(slot, navigationItem);
     }
 
-    public static void createNavigationButtons(Inventory inventory, Player player, StorageCellData storageCellData, int pageCount, int pageNumber, String searchTerm) {
+    public static void createNavigationButtons(Inventory inventory, Player player, StorageCellData storageCellData, int pageCount, int pageNumber, SearchData searchData) {
 
         // Button rules:
         // - Should only show first page button when there is more than 1 page before the current
@@ -218,25 +218,25 @@ public class TerminalItemsPage extends AbstractTerminalPage {
 
             if (pageNumber == lastPage) {
                 if (previousPage != firstPage) {
-                    createPageNavButton(inventory, player, storageCellData, firstPage, FIRST_PAGE_TEXTURE, Language.FIRST_PAGE, searchTerm, 45);
+                    createPageNavButton(inventory, player, storageCellData, firstPage, FIRST_PAGE_TEXTURE, Language.FIRST_PAGE, searchData, 45);
                 }
-                createPageNavButton(inventory, player, storageCellData, previousPage, PREVIOUS_PAGE_TEXTURE, Language.PREVIOUS_PAGE, searchTerm, 46);
+                createPageNavButton(inventory, player, storageCellData, previousPage, PREVIOUS_PAGE_TEXTURE, Language.PREVIOUS_PAGE, searchData, 46);
             }
             else if (pageNumber == firstPage) {
-                createPageNavButton(inventory, player, storageCellData, nextPage, NEXT_PAGE_TEXTURE, Language.NEXT_PAGE, searchTerm, 52);
+                createPageNavButton(inventory, player, storageCellData, nextPage, NEXT_PAGE_TEXTURE, Language.NEXT_PAGE, searchData, 52);
                 if (nextPage != lastPage) {
-                    createPageNavButton(inventory, player, storageCellData, lastPage, LAST_PAGE_TEXTURE, Language.LAST_PAGE, searchTerm, 53);
+                    createPageNavButton(inventory, player, storageCellData, lastPage, LAST_PAGE_TEXTURE, Language.LAST_PAGE, searchData, 53);
                 }
             }
             // must be in middle
             else {
                 if (previousPage != firstPage) {
-                    createPageNavButton(inventory, player, storageCellData, firstPage, FIRST_PAGE_TEXTURE, Language.FIRST_PAGE, searchTerm, 45);
+                    createPageNavButton(inventory, player, storageCellData, firstPage, FIRST_PAGE_TEXTURE, Language.FIRST_PAGE, searchData, 45);
                 }
-                createPageNavButton(inventory, player, storageCellData, previousPage, PREVIOUS_PAGE_TEXTURE, Language.PREVIOUS_PAGE, searchTerm, 46);
-                createPageNavButton(inventory, player, storageCellData, nextPage, NEXT_PAGE_TEXTURE, Language.NEXT_PAGE, searchTerm, 52);
+                createPageNavButton(inventory, player, storageCellData, previousPage, PREVIOUS_PAGE_TEXTURE, Language.PREVIOUS_PAGE, searchData, 46);
+                createPageNavButton(inventory, player, storageCellData, nextPage, NEXT_PAGE_TEXTURE, Language.NEXT_PAGE, searchData, 52);
                 if (nextPage != lastPage) {
-                    createPageNavButton(inventory, player, storageCellData, lastPage, LAST_PAGE_TEXTURE, Language.LAST_PAGE, searchTerm, 53);
+                    createPageNavButton(inventory, player, storageCellData, lastPage, LAST_PAGE_TEXTURE, Language.LAST_PAGE, searchData, 53);
                 }
             }
 
