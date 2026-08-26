@@ -103,5 +103,6 @@ public class GuiUtil {
 
     public static void fulfillCallback(UUID uuid, String query) {
         searchCallbacks.get(uuid).accept(query);
+        searchCallbacks.remove(uuid);
     }
 }

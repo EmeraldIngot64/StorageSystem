@@ -70,6 +70,10 @@ public class TerminalItemsPage extends AbstractTerminalPage {
                 searchSign,
                 event -> {
                     GuiUtil.openSearchDialog(player, searchTerm -> {
+                        if (searchTerm.isBlank()) {
+                            return;
+                        }
+                        searchTerm = searchTerm.strip();
                         player.openInventory(new TerminalSearchPage(player, storageCellData, 0, searchTerm).build());
                     });
                 }
