@@ -166,7 +166,7 @@ public class TerminalItemsPage extends AbstractTerminalPage {
         }
 
         ItemMeta itemMeta = navigationItem.getItemMeta();
-        itemMeta.setItemName(name);
+        itemMeta.setDisplayName(name);
 
         navigationItem.setItemMeta(itemMeta);
         GuiButton navigationButton;
