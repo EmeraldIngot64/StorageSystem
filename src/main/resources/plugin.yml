@@ -1,6 +1,6 @@
 name : 'StorageSystem'
-version: '2.0.3'
-api-version: '26.1'
+version: '3.0.0'
+api-version: '1.21.8'
 main: com.emeraldingot.storagesystem.StorageSystem
 commands:
   storagesystem:
