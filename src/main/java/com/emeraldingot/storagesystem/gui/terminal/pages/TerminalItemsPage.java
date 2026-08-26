@@ -69,9 +69,9 @@ public class TerminalItemsPage extends AbstractTerminalPage {
         GuiButton searchButton = new GuiButton(
                 searchSign,
                 event -> {
-                    Function<String, AbstractTerminalPage> searchPageFactory = (searchTerm) ->
-                            new TerminalSearchPage(player, storageCellData, 0, searchTerm);
-                    GuiUtil.openCustomStringSign(player, searchPageFactory, this, "Search Term");
+                    GuiUtil.openSearchDialog(player, searchTerm -> {
+                        player.openInventory(new TerminalSearchPage(player, storageCellData, 0, searchTerm).build());
+                    });
                 }
         );
         StorageSystemGui.getButtonItems(player).put(searchSign, searchButton);

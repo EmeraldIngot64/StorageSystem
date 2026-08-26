@@ -20,7 +20,7 @@ dependencies {
 //    compileOnly(files("../server/plugins/ProtocolLib.jar"))
 //    compileOnly 'org.spigotmc:spigot:1.21.4-R0.1-SNAPSHOT:remapped-mojang'
     implementation 'org.xerial:sqlite-jdbc:3.53.2.0'
-    implementation group: 'de.rapha149.signgui', name: 'signgui', version: '2.5.3'
+//    implementation group: 'de.rapha149.signgui', name: 'signgui', version: '2.5.3'
 }
 
 tasks.named('shadowJar') {

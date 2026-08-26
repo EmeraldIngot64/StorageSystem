@@ -10,6 +10,7 @@ import com.emeraldingot.storagesystem.listener.controller.*;
 import com.emeraldingot.storagesystem.listener.crafting.CraftItemListener;
 import com.emeraldingot.storagesystem.listener.crafting.PrepareCraftItemsListener;
 import com.emeraldingot.storagesystem.listener.gui.ItemsGuiClickListener;
+import com.emeraldingot.storagesystem.listener.gui.SearchDialogListener;
 import com.emeraldingot.storagesystem.listener.gui.TerminalGuiClickListener;
 import com.emeraldingot.storagesystem.listener.gui.TerminalGuiCloseListener;
 import com.emeraldingot.storagesystem.listener.terminal.TerminalInteractListener;
@@ -63,6 +64,9 @@ public class StorageSystem extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TerminalGuiClickListener(), this);
         getServer().getPluginManager().registerEvents(new TerminalGuiCloseListener(), this);
         getServer().getPluginManager().registerEvents(new StorageControllerOpenListener(), this);
+
+
+        getServer().getPluginManager().registerEvents(new SearchDialogListener(), this);
 
         // Commands
         this.getCommand("storagesystem").setExecutor(new StorageSystemCommand());
