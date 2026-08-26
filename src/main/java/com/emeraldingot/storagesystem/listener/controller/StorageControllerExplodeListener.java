@@ -3,18 +3,14 @@ package com.emeraldingot.storagesystem.listener.controller;
 
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
-import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.Inventory;
-
-import java.sql.SQLException;
 
 public class StorageControllerExplodeListener implements Listener {
     @EventHandler
@@ -51,19 +47,13 @@ public class StorageControllerExplodeListener implements Listener {
         }
 
 
-
 //
 
 //        event.setCancelled(true);
 //        block.getWorld().dropItemNaturally(block.getLocation(), StorageControllerBlock.getStack());
 
 
-
-
-
-
     }
-
 
 
 }

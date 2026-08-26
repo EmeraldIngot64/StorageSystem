@@ -2,8 +2,6 @@ package com.emeraldingot.storagesystem.recipe;
 
 import com.emeraldingot.storagesystem.item.StorageCell1K;
 import com.emeraldingot.storagesystem.item.StorageCell4K;
-import com.emeraldingot.storagesystem.item.StorageCore;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;

@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.sql.SQLException;
 import java.util.Set;
 
 public class PlayerJoinListener implements Listener {
@@ -21,19 +20,18 @@ public class PlayerJoinListener implements Listener {
             new NamespacedKey(StorageSystem.getInstance(), "storage_core"),
             new NamespacedKey(StorageSystem.getInstance(), "storage_terminal")
     );
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
 
         if (event.getPlayer().hasPermission("storagesystem.use")) {
             event.getPlayer().discoverRecipes(RECIPE_KEYS);
-        }
-        else {
+        } else {
             event.getPlayer().undiscoverRecipes(RECIPE_KEYS);
         }
 
 
     }
-
 
 
 }

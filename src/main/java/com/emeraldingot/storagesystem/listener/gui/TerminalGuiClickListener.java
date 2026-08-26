@@ -6,17 +6,18 @@ import com.emeraldingot.storagesystem.gui.StorageSystemHolder;
 import com.emeraldingot.storagesystem.gui.terminal.StorageSystemGui;
 import com.emeraldingot.storagesystem.gui.terminal.pages.TerminalItemsPage;
 import com.emeraldingot.storagesystem.gui.util.InventoryActionUtil;
-import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
 import com.emeraldingot.storagesystem.item.StorageCell;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.*;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -47,12 +48,12 @@ public class TerminalGuiClickListener implements Listener {
 
         if (event.getClickedInventory() == event.getView().getTopInventory()) {
 
-            HashMap<ItemStack, GuiButton> buttonItems = StorageSystemGui.getButtonItems((Player)event.getWhoClicked());
+            HashMap<ItemStack, GuiButton> buttonItems = StorageSystemGui.getButtonItems((Player) event.getWhoClicked());
 
             if (buttonItems.containsKey(event.getCurrentItem())) {
                 // This setup ensures that you cannot right-click regular buttons
                 // Left-click button
-                if (event.isLeftClick()){
+                if (event.isLeftClick()) {
                     playSound(event);
                     buttonItems.get(event.getCurrentItem()).click(event);
                 }
@@ -87,7 +88,6 @@ public class TerminalGuiClickListener implements Listener {
             // At this point whatever was clicked is an item
 
 
-
             // Single item type remove actions
             if (actionEquals(event, InventoryAction.PICKUP_SOME)) {
                 event.setCancelled(true);
@@ -115,7 +115,6 @@ public class TerminalGuiClickListener implements Listener {
 
                 removeFromCell(storageCellData, removedStack);
             }
-
 
 
             // Single item type add actions
@@ -190,7 +189,7 @@ public class TerminalGuiClickListener implements Listener {
                 addToCell(storageCellData, addedStack);
 
                 if (refreshPage) {
-                    TerminalItemsPage terminalItemsPage = new TerminalItemsPage((Player)event.getWhoClicked(), storageCellData, storageSystemHolder.getPageNumber());
+                    TerminalItemsPage terminalItemsPage = new TerminalItemsPage((Player) event.getWhoClicked(), storageCellData, storageSystemHolder.getPageNumber());
                     event.getWhoClicked().openInventory(terminalItemsPage.build());
                 }
 
@@ -211,7 +210,7 @@ public class TerminalGuiClickListener implements Listener {
     }
 
     private static void playSound(InventoryClickEvent event) {
-        Player player = (Player)event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         player.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 1f, 1f);
     }
 
@@ -221,7 +220,7 @@ public class TerminalGuiClickListener implements Listener {
             return;
         }
 
-        Player player = (Player)event.getPlayer();
+        Player player = (Player) event.getPlayer();
 
         // Clear out the player's button map after they close the inventory
         Bukkit.getScheduler().runTaskLater(StorageSystem.getInstance(), () -> {

@@ -2,29 +2,15 @@ package com.emeraldingot.storagesystem.impl;
 
 import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.util.Base64Util;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.Container;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.io.BukkitObjectInputStream;
-import org.bukkit.util.io.BukkitObjectOutputStream;
 
-import javax.xml.crypto.Data;
-import java.awt.*;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.UUID;
 
 public class DatabaseManager {
     private static DatabaseManager instance;
@@ -121,8 +107,7 @@ public class DatabaseManager {
                     }
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -176,8 +161,7 @@ public class DatabaseManager {
 //                    System.out.println("Item not found in the database.");
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -209,8 +193,7 @@ public class DatabaseManager {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Failed to get data for cell!");
         }
 
@@ -223,8 +206,7 @@ public class DatabaseManager {
             ResultSet versionResultSet = connection.createStatement().executeQuery("SELECT data_version FROM metadata LIMIT 1;");
             if (versionResultSet.next()) {
                 return versionResultSet.getInt("data_version");
-            }
-            else {
+            } else {
                 return -1;
             }
         } catch (SQLException e) {
@@ -238,8 +220,7 @@ public class DatabaseManager {
         try (Statement statement = connection.createStatement()) {
             statement.execute("DELETE FROM metadata");
             statement.execute("INSERT INTO metadata (data_version) VALUES (" + StorageSystem.getInstance().getConfig().getInt("data-version") + ")");
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -269,8 +250,7 @@ public class DatabaseManager {
                     if (material == null) {
                         if (materialName.equals("CHAIN")) {
                             material = Material.IRON_CHAIN;
-                        }
-                        else {
+                        } else {
                             StorageSystem.getInstance().getLogger().warning(String.format("Updater: ItemStack of %s failed to decode!", materialName));
                             continue;
                         }
@@ -301,8 +281,7 @@ public class DatabaseManager {
                 StorageSystem.getInstance().getLogger().warning("Failed to update database! There will be problems!");
                 throw new RuntimeException(e);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             StorageSystem.getInstance().getLogger().warning("Failed to update database! There will be problems!");
             throw new RuntimeException(e);
         }
@@ -328,7 +307,6 @@ public class DatabaseManager {
 
         return count;
     }
-
 
 
     public boolean uuidExists(UUID uuid) throws SQLException {

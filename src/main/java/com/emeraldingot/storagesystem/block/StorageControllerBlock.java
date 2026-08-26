@@ -3,12 +3,9 @@ package com.emeraldingot.storagesystem.block;
 import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.langauge.Language;
 import net.md_5.bungee.api.ChatColor;
-
-import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Translatable;
 import org.bukkit.block.Dispenser;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -20,11 +17,11 @@ import java.util.List;
 
 public class StorageControllerBlock {
 
-    private static final int[] SPACER_SLOTS = {0,1,2,3,5,6,7,8};
+    private static final int[] SPACER_SLOTS = {0, 1, 2, 3, 5, 6, 7, 8};
 
     public static final NamespacedKey CONTROLLER_KEY = new NamespacedKey(StorageSystem.getInstance(), "storage_controller");
 
-    public static ItemStack getStack()  {
+    public static ItemStack getStack() {
         ItemStack storageController = new ItemStack(Material.DISPENSER);
         ItemMeta itemMeta = storageController.getItemMeta();
         itemMeta.setItemName(ChatColor.YELLOW + "Storage Controller");

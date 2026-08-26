@@ -3,7 +3,6 @@ package com.emeraldingot.storagesystem.gui.terminal.pages;
 import com.emeraldingot.storagesystem.gui.GuiButton;
 import com.emeraldingot.storagesystem.gui.StorageSystemHolder;
 import com.emeraldingot.storagesystem.gui.terminal.StorageSystemGui;
-import com.emeraldingot.storagesystem.gui.util.GuiUtil;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
 import com.emeraldingot.storagesystem.impl.SearchData;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
@@ -19,7 +18,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
@@ -28,15 +26,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class TerminalSearchPage extends AbstractTerminalPage {
 
     private int pageNumber;
     private SearchData searchData;
-    private static final Type localeDataType = new TypeToken<Map<String, String>>() {}.getType();
+    private static final Type localeDataType = new TypeToken<Map<String, String>>() {
+    }.getType();
     private static final Map<String, Map<String, String>> localeCache = new HashMap<>();
     private static final Gson gson = new Gson();
 
@@ -121,11 +117,9 @@ public class TerminalSearchPage extends AbstractTerminalPage {
             if (byItemName) {
                 if (itemStack.getItemMeta().hasDisplayName()) {
                     itemName = itemStack.getItemMeta().getDisplayName();
-                }
-                else if (itemStack.getItemMeta().hasItemName()) {
+                } else if (itemStack.getItemMeta().hasItemName()) {
                     itemName = itemStack.getItemMeta().getItemName();
-                }
-                else {
+                } else {
                     String translationKey = itemStack.getTranslationKey();
                     itemName = localeCache.get(playerLocale).get(translationKey);
                 }

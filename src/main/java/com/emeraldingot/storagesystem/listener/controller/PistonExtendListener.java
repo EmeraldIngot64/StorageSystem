@@ -2,7 +2,6 @@ package com.emeraldingot.storagesystem.listener.controller;
 
 
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
-import com.emeraldingot.storagesystem.impl.ControllerManager;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,9 +21,7 @@ public class PistonExtendListener implements Listener {
         }
 
 
-
     }
-
 
 
 }

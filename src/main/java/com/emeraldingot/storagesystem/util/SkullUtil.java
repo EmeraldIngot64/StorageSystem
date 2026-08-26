@@ -1,17 +1,14 @@
 package com.emeraldingot.storagesystem.util;
 
 import com.emeraldingot.storagesystem.item.StorageCell;
-import com.emeraldingot.storagesystem.item.StorageCell1K;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.profile.PlayerProfile;
 
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.util.UUID;
 
 
 public class SkullUtil {

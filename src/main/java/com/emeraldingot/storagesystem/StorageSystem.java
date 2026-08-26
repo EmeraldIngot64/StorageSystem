@@ -1,11 +1,11 @@
 package com.emeraldingot.storagesystem;
 
 
-
 import com.emeraldingot.storagesystem.command.StorageSystemCommand;
 import com.emeraldingot.storagesystem.command.tabcompleter.StorageSystemTabCompleter;
-import com.emeraldingot.storagesystem.listener.*;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
+import com.emeraldingot.storagesystem.listener.PlayerJoinListener;
+import com.emeraldingot.storagesystem.listener.StorageItemPlaceListener;
 import com.emeraldingot.storagesystem.listener.controller.*;
 import com.emeraldingot.storagesystem.listener.crafting.CraftItemListener;
 import com.emeraldingot.storagesystem.listener.crafting.PrepareCraftItemsListener;
@@ -16,16 +16,14 @@ import com.emeraldingot.storagesystem.listener.gui.TerminalGuiCloseListener;
 import com.emeraldingot.storagesystem.listener.terminal.TerminalInteractListener;
 import com.emeraldingot.storagesystem.recipe.*;
 import com.emeraldingot.storagesystem.util.ControllerFileManager;
-import org.bukkit.*;
-import org.bukkit.entity.*;
-
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 public class StorageSystem extends JavaPlugin {
     private static StorageSystem instance;
@@ -39,6 +37,7 @@ public class StorageSystem extends JavaPlugin {
     private DatabaseManager databaseManager;
 
     public UUID cellUUID;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -110,12 +109,10 @@ public class StorageSystem extends JavaPlugin {
 //        this.getCommand("cashout").setExecutor(new CashoutCommand());
 
 
-
 //        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 //            public void run() {
 //            }
 //        }, 20, 1);
-
 
 
     }

@@ -1,6 +1,5 @@
 package com.emeraldingot.storagesystem.recipe;
 
-import com.emeraldingot.storagesystem.item.StorageCell1K;
 import com.emeraldingot.storagesystem.item.StorageCell256K;
 import com.emeraldingot.storagesystem.item.StorageCell64K;
 import org.bukkit.Material;

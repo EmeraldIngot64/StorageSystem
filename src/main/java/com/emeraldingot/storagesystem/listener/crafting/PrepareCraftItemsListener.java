@@ -30,8 +30,7 @@ public class PrepareCraftItemsListener implements Listener {
         if (StorageControllerBlock.isStorageControllerItem(event.getInventory().getResult())) {
             if (StorageCore.isStorageCore(event.getInventory().getItem(5))) {
                 return;
-            }
-            else {
+            } else {
                 event.getInventory().setResult(null);
             }
         }
@@ -48,13 +47,12 @@ public class PrepareCraftItemsListener implements Listener {
         StorageCellType storageCellType = StorageCellType.valueOf(cellTypeString);
 
 
-
         // Recipe: 1k cell
-        if (storageCellType.equals(StorageCellType.CELL_1K)) {;
+        if (storageCellType.equals(StorageCellType.CELL_1K)) {
+            ;
             if (StorageCore.isStorageCore(event.getInventory().getItem(5))) {
                 return;
-            }
-            else {
+            } else {
                 event.getInventory().setResult(null);
             }
         }
@@ -72,12 +70,10 @@ public class PrepareCraftItemsListener implements Listener {
                 }
 
                 event.getInventory().setResult(null);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 if (StorageCell.isLegacy(centerItem)) {
                     StorageCell.migrateLegacy(centerItem);
-                }
-                else {
+                } else {
                     event.getInventory().setResult(null);
                 }
 
@@ -98,12 +94,10 @@ public class PrepareCraftItemsListener implements Listener {
                 }
 
                 event.getInventory().setResult(null);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 if (StorageCell.isLegacy(centerItem)) {
                     StorageCell.migrateLegacy(centerItem);
-                }
-                else {
+                } else {
                     event.getInventory().setResult(null);
                 }
             }
@@ -122,12 +116,10 @@ public class PrepareCraftItemsListener implements Listener {
                 }
 
                 event.getInventory().setResult(null);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 if (StorageCell.isLegacy(centerItem)) {
                     StorageCell.migrateLegacy(centerItem);
-                }
-                else {
+                } else {
                     event.getInventory().setResult(null);
                 }
             }
@@ -146,26 +138,19 @@ public class PrepareCraftItemsListener implements Listener {
                 }
 
                 event.getInventory().setResult(null);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 if (StorageCell.isLegacy(centerItem)) {
                     StorageCell.migrateLegacy(centerItem);
-                }
-                else {
+                } else {
                     event.getInventory().setResult(null);
                 }
             }
         }
 
 
-
-
-
-
-
 //            newCell.setItemMeta(itemMeta);
 
-        }
+    }
 //
 
     private boolean isSameName(ItemStack firstStack, ItemStack secondStack) {
@@ -173,13 +158,11 @@ public class PrepareCraftItemsListener implements Listener {
             String firstName = firstStack.getItemMeta().getItemName();
             String secondName = secondStack.getItemMeta().getItemName();
             return firstName.equals(secondName);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             return false;
         }
 
     }
-
 
 
 }

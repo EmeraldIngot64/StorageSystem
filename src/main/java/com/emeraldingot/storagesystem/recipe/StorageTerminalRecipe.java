@@ -1,6 +1,5 @@
 package com.emeraldingot.storagesystem.recipe;
 
-import com.emeraldingot.storagesystem.item.StorageCore;
 import com.emeraldingot.storagesystem.item.StorageTerminal;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

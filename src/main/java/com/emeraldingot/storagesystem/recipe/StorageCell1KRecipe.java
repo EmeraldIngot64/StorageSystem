@@ -10,7 +10,7 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
 
-public class StorageCell1KRecipe implements Recipe{
+public class StorageCell1KRecipe implements Recipe {
     public void registerRecipe(Plugin plugin) {
         NamespacedKey namespacedKey = new NamespacedKey(plugin, "storage_cell_1k");
 

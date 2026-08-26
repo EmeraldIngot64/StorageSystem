@@ -5,8 +5,6 @@ import com.emeraldingot.storagesystem.impl.StorageCellType;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Item;
-import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -86,8 +84,7 @@ public abstract class StorageCell {
             UUID cellUUID;
             if (uuidString.equals("unset")) {
                 cellUUID = EMPTY_UUID;
-            }
-            else {
+            } else {
                 cellUUID = UUID.fromString(uuidString);
             }
 
@@ -119,12 +116,10 @@ public abstract class StorageCell {
             itemMeta.setMaxStackSize(1);
 
             itemStack.setItemMeta(itemMeta);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             StorageSystem.getInstance().getLogger().log(Level.WARNING, "Failed to migrate cell data! ItemStack of: " + itemStack);
             throw new RuntimeException(e);
         }
-
 
 
     }
@@ -138,7 +133,9 @@ public abstract class StorageCell {
 
     public ItemStack getStack() {
         return getStack(0, null);
-    };
+    }
+
+    ;
 
     public ItemStack getStack(int filledBytes, UUID uuid) {
         return null;

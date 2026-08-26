@@ -39,7 +39,6 @@ public class StorageControllerBreakListener implements Listener {
         }
 
 
-
         event.setDropItems(false);
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
             block.getWorld().dropItemNaturally(block.getLocation(), StorageControllerBlock.getStack());
@@ -57,11 +56,7 @@ public class StorageControllerBreakListener implements Listener {
         ControllerManager.getInstance().removeController(block.getLocation());
 
 
-
-
-
     }
-
 
 
 }

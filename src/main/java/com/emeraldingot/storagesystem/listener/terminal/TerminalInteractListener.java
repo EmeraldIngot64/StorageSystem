@@ -16,15 +16,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
 
-import java.sql.SQLException;
-import java.util.SimpleTimeZone;
 import java.util.UUID;
 
 public class TerminalInteractListener implements Listener {
     @EventHandler
-    public void onPlayerNormalInteract(PlayerInteractEvent event)  {
+    public void onPlayerNormalInteract(PlayerInteractEvent event) {
 //        System.out.println("test");
         if (event.getHand() == null) {
             return;
@@ -117,16 +114,13 @@ public class TerminalInteractListener implements Listener {
 //            event.getPlayer().openInventory(StorageSystemGUI.getCompleteStoragePage(uuid, location, 0));
 
 
-
             return;
-        }
-        else {
+        } else {
             event.getPlayer().sendMessage(Language.NO_PAIRED_CONTROLLER_MESSAGE);
         }
 
 
     }
-
 
 
     @EventHandler
@@ -167,11 +161,6 @@ public class TerminalInteractListener implements Listener {
             StorageTerminal.setPairedLocation(event.getItem(), location);
             event.getPlayer().sendMessage(Language.PAIRED_WITH_CONTROLLER_MESSAGE);
         }
-
-
-
-
-
 
 
     }

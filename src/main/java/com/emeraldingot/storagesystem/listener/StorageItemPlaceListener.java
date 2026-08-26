@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -39,16 +38,16 @@ public class StorageItemPlaceListener implements Listener {
             event.setCancelled(true);
             return;
         }
-        
+
         if (itemStack.getItemMeta().getLore() == null) {
             return;
         }
-        
-        
+
+
         // For legacy purposes to ensure that items cannot be placed before being migrated
 
         List<String> lore = itemStack.getItemMeta().getLore();
-        
+
         if (lore.contains(Language.STORAGE_SYSTEM_LORE_TAG)) {
             event.setCancelled(true);
             return;
@@ -56,7 +55,6 @@ public class StorageItemPlaceListener implements Listener {
 
 
     }
-
 
 
 }

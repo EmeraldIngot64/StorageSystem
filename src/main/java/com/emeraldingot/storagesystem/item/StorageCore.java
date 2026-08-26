@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class StorageCore {
 
     private static final NamespacedKey STORAGE_CORE_KEY = new NamespacedKey(StorageSystem.getInstance(), "storage_core");
 
-    public static ItemStack getStack()  {
+    public static ItemStack getStack() {
         try {
             ItemStack storageCore = SkullUtil.createPlayerHead("http://textures.minecraft.net/texture/3db9e7f6ab3a8c7686cf9d8ac244dd47890ca79494e9ce3951824f03deb87b3d");
             ItemMeta itemMeta = storageCore.getItemMeta();
@@ -31,8 +30,7 @@ public class StorageCore {
 
             storageCore.setItemMeta(itemMeta);
             return storageCore;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ItemStack(Material.PAPER);
         }
 
@@ -57,7 +55,7 @@ public class StorageCore {
 
         return false;
 
-        }
+    }
 
     public static boolean isLegacy(ItemStack itemStack) {
         ItemMeta itemMeta = itemStack.getItemMeta();

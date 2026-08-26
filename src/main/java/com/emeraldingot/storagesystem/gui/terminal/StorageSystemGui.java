@@ -3,7 +3,6 @@ package com.emeraldingot.storagesystem.gui.terminal;
 import com.emeraldingot.storagesystem.gui.GuiButton;
 import com.emeraldingot.storagesystem.gui.terminal.pages.TerminalItemsPage;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

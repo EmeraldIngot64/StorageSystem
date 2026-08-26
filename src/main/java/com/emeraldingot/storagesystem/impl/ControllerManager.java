@@ -1,30 +1,19 @@
 package com.emeraldingot.storagesystem.impl;
 
-import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.item.StorageCell;
-import com.emeraldingot.storagesystem.item.StorageCell16K;
-import com.emeraldingot.storagesystem.item.StorageCell1K;
-import com.emeraldingot.storagesystem.listener.PlayerJoinListener;
 import com.emeraldingot.storagesystem.listener.gui.TerminalGuiClickListener;
 import com.emeraldingot.storagesystem.util.ControllerFileManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SuspiciousStewMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import javax.naming.ldap.Control;
-import javax.xml.crypto.Data;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.*;
 
 public class ControllerManager {
@@ -34,11 +23,11 @@ public class ControllerManager {
     public ControllerManager() {
         try {
             this.storageControllers = ControllerFileManager.getInstance().loadControllers();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return;
         }
     }
+
     private static ControllerManager instance;
 
     public static ControllerManager getInstance() {
@@ -65,7 +54,7 @@ public class ControllerManager {
 
     public boolean isOnline(Location location) {
         Dispenser dispenser = (Dispenser) location.getBlock().getState();
-        Inventory inventory =  dispenser.getInventory();
+        Inventory inventory = dispenser.getInventory();
 
         if (inventory.getItem(4) == null) {
             return false;
@@ -104,8 +93,7 @@ public class ControllerManager {
 
         if (uuid.equals(StorageCell.EMPTY_UUID)) {
             return null;
-        }
-        else {
+        } else {
             return uuid;
         }
 
@@ -131,8 +119,7 @@ public class ControllerManager {
             if (getID(location) == null) {
                 generateID(location);
             }
-        }
-        else {
+        } else {
             StorageControllerBlock.setOffline(dispenser.getInventory());
         }
 
@@ -156,8 +143,7 @@ public class ControllerManager {
         cell.setItemMeta(itemMeta);
         try {
             DatabaseManager.getInstance().addStorageCell(uuid);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return;
         }
 
@@ -184,8 +170,7 @@ public class ControllerManager {
 
         if (closestLocationDistance <= 10) {
             return closestLocation;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -193,6 +178,7 @@ public class ControllerManager {
     public void openController(Location location, Player player) {
         controllersInUse.put(location, player);
     }
+
     public void closeController(Location location) {
         controllersInUse.remove(location);
     }
@@ -239,8 +225,7 @@ public class ControllerManager {
         int maxAmount = Integer.parseInt(lore.get(0).split(": ")[1].split("/")[1].split(" bytes")[0]);
         if ((oldFilledAmount + getScaledAmount(itemStack)) > maxAmount) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -283,23 +268,15 @@ public class ControllerManager {
 
         if (realBytesUsed != storedBytesUsed) {
 //            System.out.println("something awful has happened!");
-        }
-        else {
+        } else {
 //            System.out.println("everything working as expected");
         }
     }
 
 
-
     public int getScaledAmount(ItemStack itemStack) {
         return (64 / itemStack.getMaxStackSize()) * itemStack.getAmount();
     }
-
-
-
-
-
-
 
 
 }

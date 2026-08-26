@@ -1,7 +1,6 @@
 package com.emeraldingot.storagesystem.util;
 
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 
@@ -13,9 +12,9 @@ import java.util.Base64;
 public class Base64Util {
     /**
      * A method to serialize an inventory to Base64 string.
-     *
-     * <p />
-     *
+     * <p>
+     * <p/>
+     * <p>
      * Special thanks to Comphenix in the Bukkit forums or also known
      * as aadnk on GitHub.
      *
@@ -42,11 +41,10 @@ public class Base64Util {
     }
 
     /**
-     *
      * A method to get an {@link Inventory} from an encoded, Base64, string.
-     *
-     * <p />
-     *
+     * <p>
+     * <p/>
+     * <p>
      * Special thanks to Comphenix in the Bukkit forums or also known
      * as aadnk on GitHub.
      *

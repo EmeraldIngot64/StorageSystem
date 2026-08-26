@@ -31,7 +31,6 @@ public class InventoryActionUtil {
     };
 
 
-
     public static boolean isCrossInventory(InventoryAction action) {
         return Arrays.stream(CROSS_INVENTORY_ACTIONS).toList().contains(action);
     }
@@ -43,8 +42,6 @@ public class InventoryActionUtil {
     public static boolean isPickUpAction(InventoryAction action) {
         return Arrays.stream(PICK_UP_ACTIONS).toList().contains(action);
     }
-
-
 
 
     public static boolean isSwapAction(InventoryAction action) {

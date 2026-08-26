@@ -19,7 +19,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public class TerminalItemsPage extends AbstractTerminalPage {
 
@@ -87,9 +86,6 @@ public class TerminalItemsPage extends AbstractTerminalPage {
         createNavigationButtons(inventory, player, storageCellData, pageCount, pageNumber, null);
 
 
-
-
-
         return inventory;
     }
 
@@ -100,13 +96,13 @@ public class TerminalItemsPage extends AbstractTerminalPage {
         for (ItemStack itemStack : itemStacks) {
 
             int amount = itemStack.getAmount();
-            int stackCount = (int) Math.ceil(amount / (double)itemStack.getMaxStackSize());
+            int stackCount = (int) Math.ceil(amount / (double) itemStack.getMaxStackSize());
 
             totalStackCount += stackCount;
 
         }
 
-        int pageCount = (int) Math.ceil((double)totalStackCount / STACKS_PER_PAGE);
+        int pageCount = (int) Math.ceil((double) totalStackCount / STACKS_PER_PAGE);
 
         pageCount = Math.max(pageCount, 1);
 
@@ -151,7 +147,6 @@ public class TerminalItemsPage extends AbstractTerminalPage {
         int endIndex = Math.min(items.size(), startIndex + STACKS_PER_PAGE);
 
 
-
         for (int i = startIndex; i < endIndex; i++) {
             // i will be the absolute position in the list
             // this is done so that it sets items at the top of the inventory
@@ -183,8 +178,7 @@ public class TerminalItemsPage extends AbstractTerminalPage {
                         player.openInventory(terminalItemsPage.build());
                     }
             );
-        }
-        else {
+        } else {
             navigationButton = new GuiButton(
                     navigationItem,
                     event -> {
@@ -221,8 +215,7 @@ public class TerminalItemsPage extends AbstractTerminalPage {
                     createPageNavButton(inventory, player, storageCellData, firstPage, FIRST_PAGE_TEXTURE, Language.FIRST_PAGE, searchData, 45);
                 }
                 createPageNavButton(inventory, player, storageCellData, previousPage, PREVIOUS_PAGE_TEXTURE, Language.PREVIOUS_PAGE, searchData, 46);
-            }
-            else if (pageNumber == firstPage) {
+            } else if (pageNumber == firstPage) {
                 createPageNavButton(inventory, player, storageCellData, nextPage, NEXT_PAGE_TEXTURE, Language.NEXT_PAGE, searchData, 52);
                 if (nextPage != lastPage) {
                     createPageNavButton(inventory, player, storageCellData, lastPage, LAST_PAGE_TEXTURE, Language.LAST_PAGE, searchData, 53);

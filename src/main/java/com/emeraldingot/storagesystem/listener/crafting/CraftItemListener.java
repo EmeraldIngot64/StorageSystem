@@ -24,9 +24,9 @@ public class CraftItemListener implements Listener {
 
         if (
                 isSameName(recipe.getResult(), new StorageCell4K().getStack()) ||
-                isSameName(recipe.getResult(), new StorageCell16K().getStack()) ||
-                isSameName(recipe.getResult(), new StorageCell64K().getStack()) ||
-                isSameName(recipe.getResult(), new StorageCell256K().getStack())
+                        isSameName(recipe.getResult(), new StorageCell16K().getStack()) ||
+                        isSameName(recipe.getResult(), new StorageCell64K().getStack()) ||
+                        isSameName(recipe.getResult(), new StorageCell256K().getStack())
         ) {
 //            System.out.println("crafted storage cell - copying disk data");
             ItemStack newCell = event.getCurrentItem();
@@ -58,13 +58,11 @@ public class CraftItemListener implements Listener {
             String firstName = firstStack.getItemMeta().getItemName();
             String secondName = secondStack.getItemMeta().getItemName();
             return firstName.equals(secondName);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             return false;
         }
 
     }
-
 
 
 }

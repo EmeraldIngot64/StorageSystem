@@ -9,7 +9,7 @@ public class StorageSystemHolder implements InventoryHolder {
     private final StorageCellData storageCellData;
     private final int pageNumber;
 
-    public StorageSystemHolder (StorageCellData storageCellData, int pageNumber) {
+    public StorageSystemHolder(StorageCellData storageCellData, int pageNumber) {
         this.storageCellData = storageCellData;
         this.pageNumber = pageNumber;
     }

@@ -1,11 +1,9 @@
 package com.emeraldingot.storagesystem.item;
 
-import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.impl.StorageCellType;
 import com.emeraldingot.storagesystem.util.SkullUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -20,7 +18,7 @@ public class StorageCell1K extends StorageCell {
     private static final int SIZE = 1 * 1024;
 
     @Override
-    public ItemStack getStack(int filledBytes, UUID uuid)  {
+    public ItemStack getStack(int filledBytes, UUID uuid) {
         try {
             ItemStack storageCore = SkullUtil.createPlayerHead("http://textures.minecraft.net/texture/5c718e958e31e7fa62de6bd616d1f7eacd4a3ffeedfa27307dde372e3200fb17");
             ItemMeta itemMeta = storageCore.getItemMeta();
@@ -32,8 +30,7 @@ public class StorageCell1K extends StorageCell {
 
             if (uuid.equals(StorageCell.EMPTY_UUID)) {
                 lore.add(ChatColor.WHITE + "Cell ID: unset");
-            }
-            else {
+            } else {
                 lore.add(ChatColor.WHITE + "Cell ID: " + uuid.toString());
             }
 
@@ -47,8 +44,7 @@ public class StorageCell1K extends StorageCell {
 
             storageCore.setItemMeta(itemMeta);
             return storageCore;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ItemStack(Material.PAPER);
         }
 

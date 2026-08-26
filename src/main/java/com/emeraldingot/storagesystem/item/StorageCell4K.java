@@ -16,7 +16,7 @@ public class StorageCell4K extends StorageCell {
     private static final int SIZE = 4 * 1024;
 
     @Override
-    public ItemStack getStack(int filledBytes, UUID uuid)  {
+    public ItemStack getStack(int filledBytes, UUID uuid) {
         try {
             ItemStack storageCore = SkullUtil.createPlayerHead("http://textures.minecraft.net/texture/b7c81d15068854baafd67760f6fea9d8fb4b0a3b79e347c5159179591b85c4e7");
             ItemMeta itemMeta = storageCore.getItemMeta();
@@ -29,8 +29,7 @@ public class StorageCell4K extends StorageCell {
 
             if (uuid.equals(StorageCell.EMPTY_UUID)) {
                 lore.add(ChatColor.WHITE + "Cell ID: unset");
-            }
-            else {
+            } else {
                 lore.add(ChatColor.WHITE + "Cell ID: " + uuid.toString());
             }
 
@@ -44,8 +43,7 @@ public class StorageCell4K extends StorageCell {
 
             storageCore.setItemMeta(itemMeta);
             return storageCore;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ItemStack(Material.PAPER);
         }
 

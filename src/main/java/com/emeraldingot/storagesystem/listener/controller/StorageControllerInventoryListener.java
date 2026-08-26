@@ -3,12 +3,10 @@ package com.emeraldingot.storagesystem.listener.controller;
 import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
-import com.emeraldingot.storagesystem.impl.StorageCellData;
 import com.emeraldingot.storagesystem.item.StorageCell;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
@@ -20,7 +18,7 @@ public class StorageControllerInventoryListener implements Listener {
 
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent event)  {
+    public void onInventoryClick(InventoryClickEvent event) {
 
 //        if(!event.getAction().equals(InventoryAction.PLACE_ALL) && !event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
 //            return;
@@ -37,8 +35,7 @@ public class StorageControllerInventoryListener implements Listener {
 
         if (event.getView().getTopInventory().getItem(4) == null) {
             StorageControllerBlock.setOffline(event.getView().getTopInventory());
-        }
-        else {
+        } else {
             StorageControllerBlock.setOnline(event.getView().getTopInventory());
         }
 
@@ -62,8 +59,7 @@ public class StorageControllerInventoryListener implements Listener {
         // this doesn't work for hotbar swap since of the two swapped items one is valid
         if (StorageCell.isStorageCell(currentItem) || StorageCell.isStorageCell(cursorItem)) {
             event.setCancelled(false);
-        }
-        else {
+        } else {
             event.setCancelled(true);
             return;
         }
@@ -78,9 +74,6 @@ public class StorageControllerInventoryListener implements Listener {
                 ControllerManager.getInstance().updateState(location);
             }
         }, 5L);
-
-
-
 
 
     }

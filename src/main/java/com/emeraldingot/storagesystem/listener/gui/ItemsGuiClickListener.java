@@ -2,8 +2,6 @@ package com.emeraldingot.storagesystem.listener.gui;
 
 import com.emeraldingot.storagesystem.gui.util.InventoryActionUtil;
 import com.emeraldingot.storagesystem.langauge.Language;
-
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
@@ -23,7 +21,7 @@ public class ItemsGuiClickListener implements Listener {
 //        }
 
         String title = event.getView().getTitle();
-        
+
 
         // don't have to return here since the next if statement will
         if (!title.equals(Language.STORAGE_SYSTEM_ITEMS_TITLE)) {
@@ -34,27 +32,20 @@ public class ItemsGuiClickListener implements Listener {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
                 event.setCancelled(true);
                 event.getWhoClicked().setItemOnCursor(event.getCurrentItem().clone());
-            }
-            else if (event.getAction().equals(InventoryAction.CLONE_STACK)) {
+            } else if (event.getAction().equals(InventoryAction.CLONE_STACK)) {
                 event.setCancelled(true);
                 ItemStack cloneStack = event.getCurrentItem().clone();
                 cloneStack.setAmount(cloneStack.getMaxStackSize());
                 event.getWhoClicked().setItemOnCursor(cloneStack);
-            }
-
-            else {
+            } else {
                 event.setCancelled(true);
             }
 
-        }
-        else {
+        } else {
             if (InventoryActionUtil.isCrossInventory(event.getAction())) {
                 event.setCancelled(true);
             }
         }
-
-
-
 
 
 //        event.setCancelled(false);
