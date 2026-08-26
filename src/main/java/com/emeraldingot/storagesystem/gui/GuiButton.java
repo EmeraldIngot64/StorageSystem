@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 
 public class GuiButton {
     private ItemStack itemStack;
-    private Consumer<InventoryClickEvent> onClick;
+    private final Consumer<InventoryClickEvent> onClick;
 
 
     public GuiButton(ItemStack itemStack, Consumer<InventoryClickEvent> onClick) {

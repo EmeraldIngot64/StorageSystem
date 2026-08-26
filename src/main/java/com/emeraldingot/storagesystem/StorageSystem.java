@@ -24,6 +24,7 @@ import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class StorageSystem extends JavaPlugin {
     private static StorageSystem instance;
@@ -93,6 +94,7 @@ public class StorageSystem extends JavaPlugin {
             // we make it 'databaseManager =' because we will use it when registering events.
             // The file name will be 'database.db' but you can change that here.
             databaseManager = new DatabaseManager(getDataFolder().getAbsolutePath() + "/database.db");
+            databaseManager.update();
         } catch (SQLException e) {
             e.printStackTrace();
             // Disable the plugin if the database connection fails, because we don't want enabled plugin with no functionality.

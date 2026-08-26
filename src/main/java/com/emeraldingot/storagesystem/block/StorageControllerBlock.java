@@ -4,9 +4,11 @@ import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.langauge.Language;
 import net.md_5.bungee.api.ChatColor;
 
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Translatable;
 import org.bukkit.block.Dispenser;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

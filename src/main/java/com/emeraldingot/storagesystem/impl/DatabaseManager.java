@@ -1,6 +1,7 @@
 package com.emeraldingot.storagesystem.impl;
 
 import com.emeraldingot.storagesystem.StorageSystem;
+import com.emeraldingot.storagesystem.util.Base64Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Container;
@@ -12,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import javax.xml.crypto.Data;
 import java.awt.*;
@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,6 +60,14 @@ public class DatabaseManager {
             statement.execute(createItemsTable);
 
         }
+
+        try (Statement statement = connection.createStatement()) {
+            String createMetadataTable = "CREATE TABLE IF NOT EXISTS metadata (" +
+                    "data_version INTEGER PRIMARY KEY);";
+
+            statement.execute(createMetadataTable);
+
+        }
     }
 
     public void addStorageCell(UUID uuid) throws SQLException {
@@ -72,7 +81,7 @@ public class DatabaseManager {
 
     public void addItemsToCell(UUID uuid, ItemStack itemStack) {
         String material = itemStack.getType().toString();  // Get the material type
-        String itemMeta = toBase64(itemStack.getItemMeta());  // Get serialized item metadata
+        String itemMeta = Base64Util.toBase64(itemStack.getItemMeta());  // Get serialized item metadata
         int amountToAdd = itemStack.getAmount();  // Get the amount of items to add
 
         String selectQuery = "SELECT count FROM items WHERE cell_id = ? AND material = ? AND item_meta = ?";
@@ -118,12 +127,10 @@ public class DatabaseManager {
         }
     }
 
-
-
     public void removeItemsFromCell(UUID uuid, ItemStack itemStack) {
         String material = itemStack.getType().toString();  // Get material (e.g., "OAK_LOG")
 
-        String itemMeta = toBase64(itemStack.getItemMeta());  // Get serialized metadata (can be empty or null)
+        String itemMeta = Base64Util.toBase64(itemStack.getItemMeta());  // Get serialized metadata (can be empty or null)
         int amountToRemove = itemStack.getAmount();  // Get the amount to remove
 
         String selectQuery = "SELECT count FROM items WHERE cell_id = ? AND material = ? AND item_meta = ?";
@@ -175,29 +182,31 @@ public class DatabaseManager {
         }
     }
 
-
-
     public List<ItemStack> getItemsByCellUUID(UUID cellUUID) {
         List<ItemStack> itemList = new ArrayList<>();
 
         String query = "SELECT material, item_meta, count FROM items WHERE cell_id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             // Set the cell UUID as parameter
             preparedStatement.setString(1, cellUUID.toString());
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    Material material = Material.valueOf(resultSet.getString("material"));
-                    ItemMeta itemMeta = fromBase64(resultSet.getString("item_meta"));
+
+                    Material material = Material.matchMaterial(resultSet.getString("material"));
+
+                    ItemMeta itemMeta = (ItemMeta) Base64Util.fromBase64(resultSet.getString("item_meta"));
                     int count = resultSet.getInt("count");
 
                     ItemStack itemStack = new ItemStack(material, count);
                     itemStack.setItemMeta(itemMeta);
 
                     itemList.add(itemStack);
+
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -209,6 +218,96 @@ public class DatabaseManager {
         return itemList;
     }
 
+    public int getVersion() {
+        try {
+            ResultSet versionResultSet = connection.createStatement().executeQuery("SELECT data_version FROM metadata LIMIT 1;");
+            if (versionResultSet.next()) {
+                return versionResultSet.getInt("data_version");
+            }
+            else {
+                return -1;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateVersion() {
+        // For the time being there's only one row
+        // If that changes, so will this code
+        try (Statement statement = connection.createStatement()) {
+            statement.execute("DELETE FROM metadata");
+            statement.execute("INSERT INTO metadata (data_version) VALUES (" + StorageSystem.getInstance().getConfig().getInt("data-version") + ")");
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void update() {
+
+        int version = getVersion();
+        int latestVersion = StorageSystem.getInstance().getConfig().getInt("data-version");
+        if (version == latestVersion) {
+            return;
+        }
+        StorageSystem.getInstance().getLogger().info("Database is outdated, updating! This may take a while");
+
+
+        String query = "SELECT item_id, material, item_meta, count FROM items";
+        String updateQuery = "UPDATE items SET material = ?, item_meta = ?, count = ? WHERE item_id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            PreparedStatement preparedUpdateStatement = connection.prepareStatement(updateQuery);
+            int batchCount = 0;
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+
+                    String materialName = resultSet.getString("material");
+                    Material material = Material.matchMaterial(materialName);
+                    if (material == null) {
+                        if (materialName.equals("CHAIN")) {
+                            material = Material.IRON_CHAIN;
+                        }
+                        else {
+                            StorageSystem.getInstance().getLogger().warning(String.format("Updater: ItemStack of %s failed to decode!", materialName));
+                            continue;
+                        }
+                    }
+
+                    ItemMeta itemMeta = (ItemMeta) Base64Util.fromBase64(resultSet.getString("item_meta"));
+                    String newItemMeta = Base64Util.toBase64(itemMeta);
+
+                    int count = resultSet.getInt("count");
+
+                    preparedUpdateStatement.setString(1, material.toString());
+                    preparedUpdateStatement.setString(2, newItemMeta);
+                    preparedUpdateStatement.setInt(3, count);
+                    preparedUpdateStatement.setLong(4, resultSet.getLong("item_id"));
+
+                    preparedUpdateStatement.addBatch();
+                    batchCount++;
+
+                    if (batchCount % 500 == 0) {
+                        preparedUpdateStatement.executeBatch();
+                    }
+
+                }
+
+                preparedUpdateStatement.executeBatch();
+                updateVersion();
+            } catch (Exception e) {
+                StorageSystem.getInstance().getLogger().warning("Failed to update database! There will be problems!");
+                throw new RuntimeException(e);
+            }
+        }
+        catch (Exception e) {
+            StorageSystem.getInstance().getLogger().warning("Failed to update database! There will be problems!");
+            throw new RuntimeException(e);
+        }
+    }
+
     public int getCount(UUID cellId, ItemStack itemStack) {
         String query = "SELECT count FROM items WHERE cell_id = ? AND material = ? AND item_meta = ?";
         int count = 0;  // Default to 0 if no items are found
@@ -216,7 +315,7 @@ public class DatabaseManager {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, cellId.toString());       // Set the cell_id parameter
             preparedStatement.setString(2, itemStack.getType().toString());     // Set the material parameter
-            preparedStatement.setString(3, toBase64(itemStack.getItemMeta()));     // Set the item_meta parameter (can be null)
+            preparedStatement.setString(3, Base64Util.toBase64(itemStack.getItemMeta()));     // Set the item_meta parameter (can be null)
 
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
@@ -230,65 +329,6 @@ public class DatabaseManager {
         return count;
     }
 
-    /**
-     * A method to serialize an inventory to Base64 string.
-     *
-     * <p />
-     *
-     * Special thanks to Comphenix in the Bukkit forums or also known
-     * as aadnk on GitHub.
-     *
-     * <a href="https://gist.github.com/aadnk/8138186">Original Source</a>
-     *
-     * @param inventory to serialize
-     * @return Base64 string of the provided inventory
-     * @throws IllegalStateException
-     */
-    public static String toBase64(ItemMeta itemMeta) throws IllegalStateException {
-        try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
-
-            // Write the size of the inventory
-            dataOutput.writeObject(itemMeta);
-
-            // Serialize that array
-            dataOutput.close();
-            return Base64Coder.encodeLines(outputStream.toByteArray());
-        } catch (Exception e) {
-            throw new IllegalStateException("Unable to save item stack.", e);
-        }
-    }
-
-    /**
-     *
-     * A method to get an {@link Inventory} from an encoded, Base64, string.
-     *
-     * <p />
-     *
-     * Special thanks to Comphenix in the Bukkit forums or also known
-     * as aadnk on GitHub.
-     *
-     * <a href="https://gist.github.com/aadnk/8138186">Original Source</a>
-     *
-     * @param data Base64 string of data containing an inventory.
-     * @return Inventory created from the Base64 string.
-     * @throws IOException
-     */
-    public static ItemMeta fromBase64(String data) throws IOException {
-        try {
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
-            BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
-
-            // Read the serialized inventory
-            ItemMeta itemMeta = (ItemMeta) dataInput.readObject();
-
-            dataInput.close();
-            return itemMeta;
-        } catch (ClassNotFoundException e) {
-            throw new IOException("Unable to decode class type.", e);
-        }
-    }
 
 
     public boolean uuidExists(UUID uuid) throws SQLException {

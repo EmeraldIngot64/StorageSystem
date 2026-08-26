@@ -6,8 +6,8 @@ import org.bukkit.inventory.InventoryHolder;
 
 public class StorageSystemHolder implements InventoryHolder {
 
-    private StorageCellData storageCellData;
-    private int pageNumber;
+    private final StorageCellData storageCellData;
+    private final int pageNumber;
 
     public StorageSystemHolder (StorageCellData storageCellData, int pageNumber) {
         this.storageCellData = storageCellData;

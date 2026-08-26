@@ -1,7 +1,6 @@
 package com.emeraldingot.storagesystem.gui.util;
 
 import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.Arrays;
 

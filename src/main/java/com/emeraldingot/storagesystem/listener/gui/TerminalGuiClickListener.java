@@ -32,11 +32,10 @@ public class TerminalGuiClickListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         InventoryHolder holder = event.getView().getTopInventory().getHolder();
 
-        if (!(holder instanceof StorageSystemHolder)) {
+        if (!(holder instanceof StorageSystemHolder storageSystemHolder)) {
             return;
         }
 
-        StorageSystemHolder storageSystemHolder = (StorageSystemHolder)holder;
         StorageCellData storageCellData = storageSystemHolder.getStorageCellData();
         UUID uuid = storageCellData.getUUID();
 
@@ -196,14 +195,7 @@ public class TerminalGuiClickListener implements Listener {
                 }
 
             }
-
-
-
-
-
         }
-
-
 
 //        event.setCancelled(true);
 
@@ -238,7 +230,6 @@ public class TerminalGuiClickListener implements Listener {
             }
 
         }, 1L); // Delay 1 tick
-
 
     }
 
