@@ -20,7 +20,7 @@ public class StorageCell64K extends StorageCell {
         try {
             ItemStack storageCore = SkullUtil.createPlayerHead("http://textures.minecraft.net/texture/92f704b3b33e90c696a4ac825f2813485c00c9d7ee5a0b4e857b85d9886b7897");
             ItemMeta itemMeta = storageCore.getItemMeta();
-            itemMeta.setItemName(ChatColor.YELLOW + "64k Storage Cell");
+            itemMeta.setDisplayName(ChatColor.YELLOW + "64k Storage Cell");
             itemMeta.setMaxStackSize(1);
 
             ArrayList<String> lore = new ArrayList<>();

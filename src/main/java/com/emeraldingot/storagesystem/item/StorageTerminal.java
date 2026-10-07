@@ -24,7 +24,7 @@ public class StorageTerminal {
         try {
             ItemStack storageTerminal = SkullUtil.createPlayerHead("http://textures.minecraft.net/texture/e5c0358fb64eaac6db69a857f8987b5197fcea72609c060a8628da92266fd592");
             ItemMeta itemMeta = storageTerminal.getItemMeta();
-            itemMeta.setItemName(ChatColor.YELLOW + "Storage Terminal");
+            itemMeta.setDisplayName(ChatColor.YELLOW + "Storage Terminal");
             ArrayList<String> lore = new ArrayList<>();
             lore.add("Wireless item access");
             lore.add(ChatColor.RESET + "" + ChatColor.DARK_GRAY + "StorageSystem");

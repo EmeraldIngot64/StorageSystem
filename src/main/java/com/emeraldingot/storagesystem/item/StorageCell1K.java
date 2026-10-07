@@ -22,7 +22,7 @@ public class StorageCell1K extends StorageCell {
         try {
             ItemStack storageCore = SkullUtil.createPlayerHead("http://textures.minecraft.net/texture/5c718e958e31e7fa62de6bd616d1f7eacd4a3ffeedfa27307dde372e3200fb17");
             ItemMeta itemMeta = storageCore.getItemMeta();
-            itemMeta.setItemName(ChatColor.YELLOW + "1k Storage Cell");
+            itemMeta.setDisplayName(ChatColor.YELLOW + "1k Storage Cell");
             itemMeta.setMaxStackSize(1);
 
             ArrayList<String> lore = new ArrayList<>();
