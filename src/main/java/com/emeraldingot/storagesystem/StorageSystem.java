@@ -86,8 +86,6 @@ public class StorageSystem extends JavaPlugin {
         }
 
 
-//        MoneyFileManager.getInstance().initData(this);
-
         try {
             // Ensure the plugin's data folder exists
             if (!getDataFolder().exists()) {
